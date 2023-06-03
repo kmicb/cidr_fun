@@ -63,10 +63,13 @@ read_option() {
                 echo ""
                 for item in "${opt01_entity_items[@]}"; do
                     echo "$item"
+                    echo ""
                 done
                 echo ""
             }
             # Entity options case menu
+            clear
+            echo ""
             opt01_print_menu
             read -rp "Option: " opt01_choice
             echo ""
@@ -117,6 +120,8 @@ read_option() {
                 echo ""
                 ;;
             m) # back to main menu
+                clear
+                echo ""
                 break
                 ;;
             x) # quit
@@ -151,6 +156,26 @@ read_option() {
         done
         ;;
     2) # Search CIDRs...
+        echo "This doesn't work yet."
+        echo ""
+        while true; do
+                read -rp "Main Menu or Quit? (m/q): " back_or_quit
+                echo ""
+                case $back_or_quit in
+                m) # back to main menu
+                    clear
+                    break
+                    ;;
+                q) # quit
+                    echo ""
+                    exit 0
+                    ;;
+                *) # catch-all
+                    echo "Invalid entry."
+                    echo ""
+                    ;;
+                esac
+            done
         # prompt for IP/CIDR
         # go out and find info
         # display info
