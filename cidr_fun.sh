@@ -3,16 +3,24 @@
 # CIDR Menu Do Stuff Thingy
 
 ## features
-#
-# get list of all cidrs
-# get list of ipv4 and ipv6 only cidrs
-# for aws - too much info - just grab ipv4/6
+# Get CIDRs...
+    # List Entities (set to array if needed)
+        # AWS
+        # Google
+        # Cloudflare
+        # Apple
+        # Microsoft
+        # Meta
+            # Facebook
+            # Instagram
+        # Snap
+# get list of ipv4 and ipv6 cidrs individualally
 # search for a cidr in all places
 
 # Main Menu code block starts here
 # menu items
 menu_items=(
-    "1: List CIDRs..."
+    "1: Get CIDRs..."
     "2: Search CIDRs..."
     "9: Exit"
 )
