@@ -24,7 +24,7 @@ echo ""
 menu_items=(
     "1: List CIDRs..."
     "2: Search CIDRs..."
-    "9: Exit"
+    "x: Exit"
 )
 
 # print the menu
@@ -110,12 +110,14 @@ read_option() {
                 echo ""
                 ;;
             9) # cloudflare
+                clear
+                echo ""
                 echo "##### Cloudflare #####"
                 echo ""
-                echo "IPv4"
+                echo "##### IPv4 #####"
                 curl -s https://www.cloudflare.com/ips-v4 | sort
                 echo ""
-                echo "IPv6"
+                echo "##### IPv6 #####"
                 curl -s https://www.cloudflare.com/ips-v6 | sort
                 echo ""
                 ;;
@@ -136,14 +138,15 @@ read_option() {
 
             # prompt to go back to the main menu or quit
             while true; do
-                read -rp "Main Menu or Quit? (m/q): " back_or_quit
+                read -rp "Main Menu or Exit? (m/x): " back_or_quit
                 echo ""
                 case $back_or_quit in
                 m) # back to main menu
                     clear
+                    print_menu
                     break
                     ;;
-                q) # quit
+                x) # quit
                     echo ""
                     exit 0
                     ;;
@@ -159,14 +162,14 @@ read_option() {
         echo "This doesn't work yet."
         echo ""
         while true; do
-                read -rp "Main Menu or Quit? (m/q): " back_or_quit
+                read -rp "Main Menu or Exit? (m/x): " back_or_quit
                 echo ""
                 case $back_or_quit in
                 m) # back to main menu
                     clear
                     break
                     ;;
-                q) # quit
+                x) # quit
                     echo ""
                     exit 0
                     ;;
@@ -181,7 +184,7 @@ read_option() {
         # display info
         # ask if menu or quit
         ;;
-    9) # Exit
+    x) # Exit
         echo ""
         exit 0
         ;;
