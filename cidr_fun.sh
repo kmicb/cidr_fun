@@ -3,42 +3,26 @@
 # CIDR Menu Do Stuff Thingy
 
 ## features
-# Get CIDRs...
-# List Entities (set to array if needed)
-# AWS
-# Google
-# Cloudflare
-# Apple
-# Microsoft
-# Meta
-# Facebook
-# Instagram
-# Snap
-# get list of ipv4 and ipv6 cidrs individualally
-# search for a cidr in all places
+# output long cidrs into table format?
 
 ########################################################################################
-# code for getting cidr info
-# output all google cidrs
-# curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | .ipv4Prefix?, .ipv6Prefix? | select(. != null)'
-
 # output ipv4 only google cidrs
 # curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | select(.ipv4Prefix != null) | .ipv4Prefix'
 
 # output ipv6 only google cidrs
 # curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | select(.ipv6Prefix != null) | .ipv6Prefix'
-
-# output ipv4 cloudflare cidrs
-# curl https://www.cloudflare.com/ips-v4 | sort
-
-# output ipv6 cloudflare cidrs
-# curl https://www.cloudflare.com/ips-v6 | sort
 ########################################################################################
+
+# clear screen
+clear
+
+# drop down a line
+echo ""
 
 # Main Menu code block starts here
 # menu items
 menu_items=(
-    "1: Get CIDRs..."
+    "1: List CIDRs..."
     "2: Search CIDRs..."
     "9: Exit"
 )
@@ -70,6 +54,7 @@ read_option() {
                 "6: Facebook"
                 "7: Insta"
                 "8: Meta"
+                "9: Cloudflare"
                 "m: Main Menu"
                 "x: Exit"
             )
@@ -81,41 +66,60 @@ read_option() {
                 done
                 echo ""
             }
-
             # Entity options case menu
             opt01_print_menu
             read -rp "Option: " opt01_choice
+            echo ""
             case $opt01_choice in
-            1) # AWS
+            1) # aws
                 # prompt ipv4, ipv6, or all - I bet this coiuld be a case block too for the menu instead of echos...
                 echo "AWS was chosen."
+                echo ""
                 ;;
-            2) # Google
-                # TODO: add code for Google
+            2) # google
+                echo "Google"
+                echo ""
+                curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | .ipv4Prefix?, .ipv6Prefix? | select(. != null)'
+                echo ""
                 ;;
-            3) # Apple
-                # TODO: add code for Apple
+            3) # apple
+                echo "Apple"
+                echo ""
                 ;;
-            4) # Microsoft
-                # TODO: add code for Microsoft
+            4) # microsoft
+                echo "Microsoft"
+                echo ""
                 ;;
-            5) # Snap
-                # TODO: add code for Snap
+            5) # snap
+                echo "Snap"
+                echo ""
                 ;;
-            6) # Facebook
-                # TODO: add code for Facebook
+            6) # facebook
+                echo "Facebook"
+                echo ""
                 ;;
-            7) # Insta
-                # TODO: add code for Insta
+            7) # insta
+                echo "Instagram"
+                echo ""
                 ;;
-            8) # Meta
-                # TODO: add code for Meta
+            8) # meta
+                echo "Meta"
+                echo ""
                 ;;
-            m) # Back to main menu
+            9) # cloudflare
+                echo "##### Cloudflare #####"
+                echo ""
+                echo "IPv4"
+                curl -s https://www.cloudflare.com/ips-v4 | sort
+                echo ""
+                echo "IPv6"
+                curl -s https://www.cloudflare.com/ips-v6 | sort
+                echo ""
+                ;;
+            m) # back to main menu
                 break
                 ;;
-            x) # Quit
-                echo "Aborting script."
+            x) # quit
                 echo ""
                 exit 0
                 ;;
@@ -127,14 +131,14 @@ read_option() {
 
             # prompt to go back to the main menu or quit
             while true; do
-                read -rp "Return to menu or quit? (m/q): " back_or_quit
+                read -rp "Main Menu or Quit? (m/q): " back_or_quit
                 echo ""
                 case $back_or_quit in
-                m) # Back to menu
+                m) # back to main menu
+                    clear
                     break
                     ;;
-                q) # Quit
-                    echo "Aborting script."
+                q) # quit
                     echo ""
                     exit 0
                     ;;
@@ -153,8 +157,8 @@ read_option() {
         # ask if menu or quit
         ;;
     9) # Exit
-        echo "Aborting script."
         echo ""
+        exit 0
         ;;
     *) # catch-all
         echo "Invalid entry."
