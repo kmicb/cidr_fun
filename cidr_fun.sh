@@ -19,9 +19,14 @@ clear
 # drop down a line
 echo ""
 
-## functions
-# print the menu
-function print_menu() {
+# menu items array
+menu_items=(
+    "1: List CIDRs..."
+    "2: Search CIDRs..."
+    "x: Exit"
+)
+# function - print the menu
+function print_primary_menu() {
     echo ""
     for item in "${menu_items[@]}"; do
         echo "$item"
@@ -29,33 +34,37 @@ function print_menu() {
     done
     echo ""
 }
-
-# Main Menu code block starts here
-# menu items
-menu_items=(
-    "1: List CIDRs..."
-    "2: Search CIDRs..."
-    "x: Exit"
-)
-
-# # print the menu
-# print_menu() {
-#     echo ""
-#     for item in "${menu_items[@]}"; do
-#         echo "$item"
-#         echo ""
-#     done
-#     echo ""
-# }
-
-# case block
-# Function to read user option
+# function - now_what_prompt
+function now_what_prompt() {
+    while true; do
+        read -rp "Main Menu or Exit? (m/x): " back_or_exit
+        echo ""
+        case $back_or_exit in
+        m) # back to primary menu
+            clear
+            return 1
+            ;;
+        x) # quit
+            echo ""
+            exit 0
+            ;;
+        *) # catch-all
+            echo "Invalid entry."
+            echo ""
+            ;;
+        esac
+    done
+}
+# function - read user option
 read_option() {
+    # prompts >Option:< and sets variable
     read -rp "Option: " choice
+    # drop down a line
     echo ""
+    # menu options code block starts here
     case $choice in
-    1) # List CIDRs...
-        while true; do
+    1)  # List CIDRs...
+        while true; do # while loop of entities
             opt01_entity_items=(
                 "1: AWS"
                 "2: Google"
@@ -78,12 +87,13 @@ read_option() {
                 done
                 echo ""
             }
-            # Entity options case menu
             clear
             echo ""
+            # call opt01_print_menu function
             opt01_print_menu
-            read -rp "Option: " opt01_choice
+            read -rp "Option: " opt01_choice # prompts >Option:< and sets variable
             echo ""
+            # entity options case menu
             case $opt01_choice in
             1) # aws
                 # prompt ipv4, ipv6, or all - I bet this coiuld be a case block too for the menu instead of echos...
@@ -146,53 +156,19 @@ read_option() {
                 echo ""
                 ;;
             esac
-
-            # prompt to go back to the main menu or quit
-            while true; do
-                read -rp "Main Menu or Exit? (m/x): " back_or_quit
-                echo ""
-                case $back_or_quit in
-                m) # back to main menu
-                    clear
-                    print_menu
-                    break
-                    ;;
-                x) # quit
-                    echo ""
-                    exit 0
-                    ;;
-                *) # catch-all
-                    echo "Invalid entry."
-                    echo ""
-                    ;;
-                esac
-            done
+            # call now_what_prompt function to go back to the main menu or quit
+            now_what_prompt
+            result=$?
+            if [ $result -eq 1 ]; then
+                break
+            fi
         done
         ;;
     2) # Search CIDRs...
         echo "This doesn't work yet."
         echo ""
-        while true; do
-            read -rp "Main Menu or Exit? (m/x): " back_or_quit
-            echo ""
-            case $back_or_quit in
-            m) # back to main menu
-                clear
-                break
-                ;;
-            x) # quit
-                echo ""
-                exit 0
-                ;;
-            *) # catch-all
-                echo "Invalid entry."
-                echo ""
-                ;;
-            esac
-        done
+        now_what_prompt
         # prompt for IP/CIDR
-        # go out and find info
-        # display info
         # ask if menu or quit
         ;;
     x) # Exit
@@ -202,13 +178,13 @@ read_option() {
     *) # catch-all
         echo "Invalid entry."
         echo ""
+        now_what_prompt
         ;;
     esac
 }
-
 # loop for menu
 while true; do
-    print_menu
+    print_primary_menu
     echo ""
     read_option
     echo ""
