@@ -19,6 +19,17 @@ clear
 # drop down a line
 echo ""
 
+## functions
+# print the menu
+function print_menu() {
+    echo ""
+    for item in "${menu_items[@]}"; do
+        echo "$item"
+        echo ""
+    done
+    echo ""
+}
+
 # Main Menu code block starts here
 # menu items
 menu_items=(
@@ -27,15 +38,15 @@ menu_items=(
     "x: Exit"
 )
 
-# print the menu
-print_menu() {
-    echo ""
-    for item in "${menu_items[@]}"; do
-        echo "$item"
-        echo ""
-    done
-    echo ""
-}
+# # print the menu
+# print_menu() {
+#     echo ""
+#     for item in "${menu_items[@]}"; do
+#         echo "$item"
+#         echo ""
+#     done
+#     echo ""
+# }
 
 # case block
 # Function to read user option
@@ -162,23 +173,23 @@ read_option() {
         echo "This doesn't work yet."
         echo ""
         while true; do
-                read -rp "Main Menu or Exit? (m/x): " back_or_quit
+            read -rp "Main Menu or Exit? (m/x): " back_or_quit
+            echo ""
+            case $back_or_quit in
+            m) # back to main menu
+                clear
+                break
+                ;;
+            x) # quit
                 echo ""
-                case $back_or_quit in
-                m) # back to main menu
-                    clear
-                    break
-                    ;;
-                x) # quit
-                    echo ""
-                    exit 0
-                    ;;
-                *) # catch-all
-                    echo "Invalid entry."
-                    echo ""
-                    ;;
-                esac
-            done
+                exit 0
+                ;;
+            *) # catch-all
+                echo "Invalid entry."
+                echo ""
+                ;;
+            esac
+        done
         # prompt for IP/CIDR
         # go out and find info
         # display info
