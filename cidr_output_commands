@@ -1,0 +1,14 @@
+# output all google cidrs
+curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | .ipv4Prefix?, .ipv6Prefix? | select(. != null)'
+
+# output ipv4 google cidrs
+curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | select(.ipv4Prefix != null) | .ipv4Prefix'
+
+# output ipv6 google cidrs
+curl -s https://www.gstatic.com/ipranges/goog.json | jq -r '.prefixes[] | select(.ipv6Prefix != null) | .ipv6Prefix'
+
+# output ipv4 cloudflare cidrs
+curl https://www.cloudflare.com/ips-v4 | sort
+
+# output ipv6 cloudflare cidrs
+curl https://www.cloudflare.com/ips-v6 | sort
